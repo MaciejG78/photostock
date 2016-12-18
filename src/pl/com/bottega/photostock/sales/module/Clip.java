@@ -1,7 +1,6 @@
 package pl.com.bottega.photostock.sales.module;
 
-import java.util.Collection;
-import java.util.HashSet;
+import pl.com.bottega.photostock.sales.module.money.Money;
 
 /**
  * Created by macie on 17.12.2016.

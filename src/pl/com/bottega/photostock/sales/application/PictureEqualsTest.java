@@ -1,7 +1,7 @@
 package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.module.Clip;
-import pl.com.bottega.photostock.sales.module.Money;
+import pl.com.bottega.photostock.sales.module.money.Money;
 import pl.com.bottega.photostock.sales.module.Picture;
 import pl.com.bottega.photostock.sales.module.Product;
 

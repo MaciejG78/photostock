@@ -1,5 +1,7 @@
 package pl.com.bottega.photostock.sales.module;
 
+import pl.com.bottega.photostock.sales.module.money.Money;
+
 import java.util.Collection;
 import java.util.LinkedList;
 

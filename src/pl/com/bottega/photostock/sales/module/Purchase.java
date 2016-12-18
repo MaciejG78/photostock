@@ -23,7 +23,7 @@ public class Purchase {
     }
 
     public int getItemsCount(){
-        return 0;
+        return items.size();
     }
 
     public void sortProductsByNumberAsc(){

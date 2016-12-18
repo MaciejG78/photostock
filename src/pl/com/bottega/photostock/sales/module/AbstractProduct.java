@@ -1,5 +1,7 @@
 package pl.com.bottega.photostock.sales.module;
 
+import pl.com.bottega.photostock.sales.module.money.Money;
+
 /**
  * Created by macie on 17.12.2016.
  */

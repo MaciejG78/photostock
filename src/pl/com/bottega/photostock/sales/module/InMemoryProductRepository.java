@@ -1,6 +1,6 @@
 package pl.com.bottega.photostock.sales.module;
 
-import sun.plugin.javascript.navig.Array;
+import pl.com.bottega.photostock.sales.module.money.Money;
 
 import java.util.*;
 

@@ -1,6 +1,4 @@
-package pl.com.bottega.photostock.sales.module;
-
-import java.util.Objects;
+package pl.com.bottega.photostock.sales.module.money;
 
 /**
  * Created by macie on 10.12.2016.

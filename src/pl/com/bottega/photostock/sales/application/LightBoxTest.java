@@ -1,6 +1,7 @@
 package pl.com.bottega.photostock.sales.application;
 
 import pl.com.bottega.photostock.sales.module.*;
+import pl.com.bottega.photostock.sales.module.money.Money;
 
 import java.util.Arrays;
 import java.util.Collection;
