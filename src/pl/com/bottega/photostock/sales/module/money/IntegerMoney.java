@@ -78,7 +78,6 @@ public class IntegerMoney implements Money {
             else
                 return false;
 
-
         IntegerMoney that = (IntegerMoney) o;
 
         if (cents != that.cents) return false;
