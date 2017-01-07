@@ -44,13 +44,12 @@ public class ConsoleApplication {
         boolean canAfford = vipClient.canAfford(offer.getTotalCost());
         System.out.println("Client can afford: " + canAfford);
 
-        if(canAfford) {
+        if (canAfford) {
             vipClient.charge(offer.getTotalCost(), "Test purchase");
             Purchase purchase = new Purchase(vipClient, product1, product2, product3);
             System.out.println("Client purchased: " + purchase.getItemsCount() + " pictures.");
             System.out.println("Total cost: " + offer.getTotalCost());
-        }
-        else {
+        } else {
             System.out.println("Client cannot afford");
         }
     }

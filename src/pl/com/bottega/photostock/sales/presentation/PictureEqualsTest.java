@@ -41,11 +41,11 @@ public class PictureEqualsTest {
         System.out.println(product1.equals(clip1));
     }
 
-    private static Picture picture(String number){
+    private static Picture picture(String number) {
         return new Picture(number, "", new HashSet<>(), Money.valueOf(100));
     }
 
-    private static Clip clip(String number){
+    private static Clip clip(String number) {
         return new Clip(number, "", 500L, Money.valueOf(1));
     }
 }

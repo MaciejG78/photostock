@@ -13,7 +13,7 @@ public class Transaction {
     private String description;
     private LocalDateTime timestamp;
 
-    public Transaction(Money value, String description){
+    public Transaction(Money value, String description) {
         this.value = value;
         this.description = description;
         this.timestamp = LocalDateTime.now();

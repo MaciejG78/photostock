@@ -16,7 +16,7 @@ public class InMemoryLightBoxRepository implements LightBoxRepository {
     public void put(LightBox lightBox) {
         Client client = lightBox.getOwner();
         Collection<LightBox> lightBoxPerClient = memoryLightBoxRepository.get(client);
-        if (lightBoxPerClient == null){
+        if (lightBoxPerClient == null) {
             lightBoxPerClient = new HashSet<>();//tworzę i mam do niego referencję
             memoryLightBoxRepository.put(client, lightBoxPerClient);             //lightBoxPerClient = memoryLightBoxRepository.get(client);//nie musze pobierac z mapy bo mam do niego referencję
         }

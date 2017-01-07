@@ -3,7 +3,7 @@ package pl.com.bottega.photostock.sales.module.money;
 /**
  * Created by macie on 18.12.2016.
  */
-public interface Money extends Comparable<Money>{
+public interface Money extends Comparable<Money> {
 
     Currency DEFAULT_CURRENCY = Currency.CREDIT;
 
@@ -17,19 +17,19 @@ public interface Money extends Comparable<Money>{
 
     Money multiply(long factor);
 
-    default boolean gte(Money other){
+    default boolean gte(Money other) {
         return compareTo(other) >= 0;
     }
 
-    default boolean gt(Money other){
+    default boolean gt(Money other) {
         return compareTo(other) > 0;
     }
 
-    default boolean lte(Money other){
+    default boolean lte(Money other) {
         return compareTo(other) <= 0;
     }
 
-    default boolean lt(Money other){
+    default boolean lt(Money other) {
         return compareTo(other) < 0;
     }
 
@@ -48,7 +48,7 @@ public interface Money extends Comparable<Money>{
     }
 
 
-    static Money valueOf(float value){
+    static Money valueOf(float value) {
         return new IntegerMoney((long) (value * 100.0), DEFAULT_CURRENCY);
     }
     /*
@@ -65,8 +65,6 @@ public interface Money extends Comparable<Money>{
     }
 
 */
-
-
 
 
 }

@@ -18,18 +18,18 @@ public class Offer {
         sortProductsByPriceDesc();
     }
 
-    public boolean sameAs(Offer ofther, Money money){
+    public boolean sameAs(Offer ofther, Money money) {
         return false;
     }
 
-    public int getItemsCount(){
+    public int getItemsCount() {
         return items.size();
     }
 
     //Częsty schemat w programowaniu, iterowanie po kolekcji i coś robimy na niej.
-    public Money getTotalCost(){
+    public Money getTotalCost() {
         Money totalCost = Money.ZERO;
-        for(Product product: items){
+        for (Product product : items) {
             Money productCost = product.calculatePrice(client);
             totalCost = totalCost.add(productCost);
         }
@@ -37,7 +37,7 @@ public class Offer {
     }
 
     private void sortProductsByPriceDesc() {
-            this.items.sort(new Comparator<Product>() {
+        this.items.sort(new Comparator<Product>() {
             @Override     //Comparator tworzymy przy pomocy anonimowej klasy wewnętrznej
             public int compare(Product p1, Product p2) {
                 Money price1 = p1.calculatePrice(client);

@@ -18,7 +18,7 @@ public class Reservation {
         this.items = new LinkedList<>();
     }
 
-    public void add(Product product){
+    public void add(Product product) {
         if (items.contains(product))
             throw new IllegalArgumentException(String.format("Product %s is already in this reservation", product.getNumber()));
         product.ensureAvailable();
@@ -26,28 +26,28 @@ public class Reservation {
     }
 
 
-    public void remove(Product product){
+    public void remove(Product product) {
         if (!items.contains(product))
             throw new IllegalArgumentException(String.format("Product %s is not added to this reservation", product.getNumber()));
         items.remove(product);
     }
 
     //Do zapamiętania schemat
-    public Offer generateOffer(){
+    public Offer generateOffer() {
         Collection<Product> activeItems1 = getActiveItems();
         return new Offer(client, getActiveItems());
     }
 
     private Collection<Product> getActiveItems() {
         Collection<Product> activeItems = new HashSet<>(); //redukujemy elementy kolekcji do mniejszej kolekcji odfiltrowanej
-        for (Product product : items){
-            if(product.isActive())
+        for (Product product : items) {
+            if (product.isActive())
                 activeItems.add(product);
         }
         return activeItems;
     }
 
-    public int getItemsCount(){
+    public int getItemsCount() {
         return items.size();
     }
 }

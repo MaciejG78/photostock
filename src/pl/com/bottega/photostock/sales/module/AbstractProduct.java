@@ -23,7 +23,7 @@ public abstract class AbstractProduct implements Product {
     public abstract Money calculatePrice(Client client);
 
     @Override
-    public boolean isAvailable(){
+    public boolean isAvailable() {
         return active && !isSold() && !isReserved();
     }
 
@@ -36,28 +36,28 @@ public abstract class AbstractProduct implements Product {
     }
 
     @Override
-    public void reservedPer(Client client){
+    public void reservedPer(Client client) {
         ensureAvailable();
         reservationOwner = client;
     }
 
     @Override
-    public void unreservedPer(Client client){
+    public void unreservedPer(Client client) {
         ensureReservedBy(client);
         reservationOwner = null;
     }
 
     private void ensureReservedBy(Client client) {
-        if(!isReservedBy(client))
+        if (!isReservedBy(client))
             throw new IllegalArgumentException(String.format("Client &s is not reserved by %s", getNumber(), client.getName));
     }
 
-    private boolean isReservedBy(Client client){
+    private boolean isReservedBy(Client client) {
         return isReserved() && client.equals(reservationOwner);
     }
 
     @Override
-    public void soldPer(Client client){
+    public void soldPer(Client client) {
         ensureReservedBy(client);
         buyer = client;
         unreservedPer(client);

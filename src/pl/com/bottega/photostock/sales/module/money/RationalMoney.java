@@ -41,7 +41,7 @@ public class RationalMoney implements Money { //Comparable - interfejs służy f
         return new RationalMoney(value.negative(), currency);
     }
 
-    public int compareTo(Money other){
+    public int compareTo(Money other) {
         RationalMoney rationalMoney = other.convertToRational();
         if (!rationalMoney.currency.equals(currency))
             throw new IllegalArgumentException("Currency missmatch"); //tego wyjątku nie trzeba deklarować poprzez throws jest to wyjątek Runtimowy
@@ -58,17 +58,16 @@ public class RationalMoney implements Money { //Comparable - interfejs służy f
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof RationalMoney)) {
-            if (o instanceof IntegerMoney){
+            if (o instanceof IntegerMoney) {
                 IntegerMoney money = (IntegerMoney) o;
                 if (!value.equals(money.convertToRational().value)) return false;
                 return currency == money.currency;
-            }
-            else
+            } else
                 return false;
 
         }
 
-      RationalMoney money = (RationalMoney) o;
+        RationalMoney money = (RationalMoney) o;
 
         if (!value.equals(money.value)) return false;
         return currency == money.currency;
@@ -82,13 +81,13 @@ public class RationalMoney implements Money { //Comparable - interfejs służy f
     }
 
     @Override
-    public RationalMoney convertToRational(){
+    public RationalMoney convertToRational() {
         return this;
     }
 
     @Override
-    public IntegerMoney convertToInteger(){
-        long cents = value.getNumerator()*100/value.getDenominator();
+    public IntegerMoney convertToInteger() {
+        long cents = value.getNumerator() * 100 / value.getDenominator();
         return new IntegerMoney(cents, currency);
     }
 }

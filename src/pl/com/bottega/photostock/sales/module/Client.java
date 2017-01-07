@@ -18,44 +18,43 @@ public class Client {
     private Collection<Transaction> transactions;
     public Object getName;
 
-    public Client(String name, Address address, ClientStatus status, Money initialbalance){
+    public Client(String name, Address address, ClientStatus status, Money initialbalance) {
         this.name = name;
         this.address = address;
         this.status = status;
         this.balance = initialbalance;
         this.transactions = new LinkedList<>();
-        
+
         if (!initialbalance.equals(Money.ZERO))
-        this.transactions.add(new Transaction(initialbalance, "Openning account."));
+            this.transactions.add(new Transaction(initialbalance, "Openning account."));
     }
 
-    public Client(String name, Address address, Money balance){
+    public Client(String name, Address address, Money balance) {
         this(name, address, ClientStatus.STANDARD, balance);
     }
 
-    public boolean canAfford(Money money){
+    public boolean canAfford(Money money) {
         return balance.gte(money); //gte() - greather then equal - metoda będzie sprawdzała czy są środki
     }
 
     //Płatność za zakupy
-    public void charge(Money money, String reason){
+    public void charge(Money money, String reason) {
         if (money.lte(Money.ZERO))
             throw new IllegalArgumentException("Negative charge amount prohibited");
-        if(canAfford(money)){
+        if (canAfford(money)) {
             Transaction chargeTransaction = new Transaction(money.opposite(), reason); //opposite - liczba przeciwna
             transactions.add(chargeTransaction);
             balance = balance.subtract(money);
-        }
-        else{
+        } else {
             String template = "Client balance is %s and requested amount was %s"; //Formatowanie stringów
             String message = String.format(template, balance, money);
             throw new CantAffordException(message); //Można w jednej linijce: throw new CantAffordException(String.format("Client balance is %s and requested amount was %s", balance, money));
         }
-            
+
     }
 
     //Doładowanie konta o nowe kredyty
-    public void recharge(Money money){
+    public void recharge(Money money) {
         if (money.lte(Money.ZERO))
             throw new IllegalArgumentException("Negative recharge amount prohibited");
         Transaction transaction = new Transaction(money, "Recharge account");
@@ -68,7 +67,7 @@ public class Client {
         return name;
     }
 
-    public String introduce(){
+    public String introduce() {
         String statusName = status.getStatusName();
         return String.format("%s - %s", name, statusName);
     }

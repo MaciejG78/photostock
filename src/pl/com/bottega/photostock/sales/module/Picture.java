@@ -14,21 +14,21 @@ public class Picture extends AbstractProduct {
     private Collection<String> tags;
 
     //Konstruktor
-    public Picture(String number, String name, Collection<String> tags, Money catalogPrice, boolean active){
+    public Picture(String number, String name, Collection<String> tags, Money catalogPrice, boolean active) {
         super(name, catalogPrice, number, active);
         this.tags = new HashSet<String>(tags);
     }
 
-    public Picture(String number, String name, Collection<String> tags, Money catalogPrice){
+    public Picture(String number, String name, Collection<String> tags, Money catalogPrice) {
         this(number, name, tags, catalogPrice, true);        //ta konstrukcja odwołuje się do głównego konstruktora
     }
 
     @Override
-    public Money calculatePrice(Client client){
+    public Money calculatePrice(Client client) {
         return catalogPrice;
     }
 
-    public boolean hasTag(String tag){
+    public boolean hasTag(String tag) {
         return tags.contains(tag);
     }
 

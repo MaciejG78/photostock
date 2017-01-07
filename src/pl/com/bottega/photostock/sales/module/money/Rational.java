@@ -7,6 +7,7 @@ public final class Rational implements Comparable<Rational> {
 
     public static Rational ZERO = new Rational(0, 1);
     public static Rational ONE = new Rational(1, 1);
+
     public static Rational valueOf(long numerator, long denominator) {
 
         if (denominator == 0)
@@ -113,11 +114,11 @@ public final class Rational implements Comparable<Rational> {
 
     }
 
-    public long getNumerator(){
+    public long getNumerator() {
         return numerator;
     }
 
-    public long getDenominator(){
+    public long getDenominator() {
         return denominator;
     }
 

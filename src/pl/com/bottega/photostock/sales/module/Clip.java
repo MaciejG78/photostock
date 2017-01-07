@@ -11,18 +11,18 @@ public class Clip extends AbstractProduct {
     private Long length;
 
     //Konstruktor
-    public Clip(String number, String name, Long length, Money catalogPrice, boolean active){
+    public Clip(String number, String name, Long length, Money catalogPrice, boolean active) {
         super(name, catalogPrice, number, active);
         this.length = length;
     }
 
-    public Clip(String number, String name, Long length, Money catalogPrice){
+    public Clip(String number, String name, Long length, Money catalogPrice) {
         this(number, name, length, catalogPrice, true);        //ta konstrukcja odwołuje się do głównego konstruktora
     }
 
     @Override
-    public Money calculatePrice(Client client){
-        if(length > FIVE_MINUTES) //Jeśli dłuższy niż 5 minut
+    public Money calculatePrice(Client client) {
+        if (length > FIVE_MINUTES) //Jeśli dłuższy niż 5 minut
             return catalogPrice.multiply(2);
         else
             return catalogPrice;

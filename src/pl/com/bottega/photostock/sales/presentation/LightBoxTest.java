@@ -49,18 +49,18 @@ public class LightBoxTest {
 
     }
 
-    public static void printLightBoxes(LightBox ... lightBoxes) {
+    public static void printLightBoxes(LightBox... lightBoxes) {
         int nr = 1;
-        for (LightBox lightBox : lightBoxes){
-            System.out.println(String .format("%d.%s - %s", nr, lightBox.getName(), lightBox.getOwner().getName()));
+        for (LightBox lightBox : lightBoxes) {
+            System.out.println(String.format("%d.%s - %s", nr, lightBox.getName(), lightBox.getOwner().getName()));
             printLightBox(lightBox);
             nr++;
         }
     }
 
     public static void printLightBox(LightBox lightBox) {
-        for(Product product : lightBox){ //żeby zadzałała pętla automatyczna należy zaimplementować w LightBoxie
-                                        // Iterable<Picture> i metodę iteratora
+        for (Product product : lightBox) { //żeby zadzałała pętla automatyczna należy zaimplementować w LightBoxie
+            // Iterable<Picture> i metodę iteratora
             System.out.println(String.format("%s %s | %s", //X, numer zdjęcia | cena
                     (product.isActive() ? "" : "X "),
                     product.getNumber(),

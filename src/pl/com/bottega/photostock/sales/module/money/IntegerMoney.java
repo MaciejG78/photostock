@@ -8,7 +8,7 @@ public class IntegerMoney implements Money {
     private long cents;
     public Currency currency;
 
-    public IntegerMoney(long cents, Currency currency){
+    public IntegerMoney(long cents, Currency currency) {
         this.cents = cents;
         this.currency = currency;
     }
@@ -34,7 +34,7 @@ public class IntegerMoney implements Money {
 
     @Override
     public Money opposite() {
-        return new IntegerMoney(cents , currency);
+        return new IntegerMoney(cents, currency);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class IntegerMoney implements Money {
         return this;
     }
 
-    public int compareTo(Money other){
+    public int compareTo(Money other) {
         IntegerMoney integerMoney = safeConvert(other);
         if (cents == integerMoney.cents)
             return 0;               //Jeśli równe to 0,
@@ -58,7 +58,7 @@ public class IntegerMoney implements Money {
         else
             return 1;
         */
-        return cents < integerMoney.cents ? -1 : 1 ;        //jeśli nie są równe to -1 lub 1
+        return cents < integerMoney.cents ? -1 : 1;        //jeśli nie są równe to -1 lub 1
     }
 
     @Override
@@ -74,8 +74,7 @@ public class IntegerMoney implements Money {
                 RationalMoney money = (RationalMoney) o;
                 if (cents != money.convertToInteger().cents) return false;
                 return currency == money.currency;
-            }
-            else
+            } else
                 return false;
 
         IntegerMoney that = (IntegerMoney) o;
@@ -92,11 +91,11 @@ public class IntegerMoney implements Money {
     }
 
     private void ensureSameCurrency(IntegerMoney other) {
-        if(currency != other.currency)
+        if (currency != other.currency)
             throw new IllegalArgumentException("Currency missmatch");
     }
 
-    private IntegerMoney safeConvert(Money other){
+    private IntegerMoney safeConvert(Money other) {
         IntegerMoney integerMoney = other.convertToInteger();
         ensureSameCurrency(integerMoney);
         return integerMoney;

@@ -25,8 +25,8 @@ public interface Product {
     boolean deactivate();
 
     //Jeśli metoda jest default może być przeniesiona do interfejsu, nie może korzystać z pól
-    default void ensureAvailable(){
-        if(!isAvailable())
+    default void ensureAvailable() {
+        if (!isAvailable())
             throw new ProductNotAvailableException(this);
     }
 }

@@ -11,22 +11,22 @@ public class Purchase {
     private Date purchaseDate;
     private List<Product> items;
 
-    public  Purchase(Client client, Collection<Product> items) {
+    public Purchase(Client client, Collection<Product> items) {
         this.client = client;
         this.items = new LinkedList<>(items);
         sortProductsByNumberAsc();
     }
 
 
-    public Purchase(Client client, Product ... items){ //... oznacza dynamiczną liczbę parametrów przekazywanych poprzez konstruktor
-        this(client,Arrays.asList(items)); //tworzymy zbiór który będzie zawierał wszystkie item-y (obrazki). HasSet nie przyjmuje tablicy tylko kolekcje, więc musimy zamienić tablicę na kolekcję.
+    public Purchase(Client client, Product... items) { //... oznacza dynamiczną liczbę parametrów przekazywanych poprzez konstruktor
+        this(client, Arrays.asList(items)); //tworzymy zbiór który będzie zawierał wszystkie item-y (obrazki). HasSet nie przyjmuje tablicy tylko kolekcje, więc musimy zamienić tablicę na kolekcję.
     }
 
-    public int getItemsCount(){
+    public int getItemsCount() {
         return items.size();
     }
 
-    public void sortProductsByNumberAsc(){
+    public void sortProductsByNumberAsc() {
         this.items.sort(new Comparator<Product>() {
             @Override
             public int compare(Product p1, Product p2) {

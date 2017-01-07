@@ -68,8 +68,8 @@ public class ConsoleLightBoxRepositoryTest {
 
     private static void printLightBoxes(Collection<LightBox> lightBoxes) {
         int nr = 1;
-        for (LightBox lightBox : lightBoxes){
-            System.out.println(String .format("%d.%s - %s", nr, lightBox.getName(), lightBox.getOwner().getName()));
+        for (LightBox lightBox : lightBoxes) {
+            System.out.println(String.format("%d.%s - %s", nr, lightBox.getName(), lightBox.getOwner().getName()));
             printLightBox(lightBox);
             nr++;
         }
