@@ -17,18 +17,41 @@ public interface Money extends Comparable<Money>{
 
     Money multiply(long factor);
 
-    boolean gte(Money other);
+    default boolean gte(Money other){
+        return compareTo(other) >= 0;
+    }
 
-    boolean gt(Money other);
+    default boolean gt(Money other){
+        return compareTo(other) > 0;
+    }
 
-    boolean lte(Money other);
+    default boolean lte(Money other){
+        return compareTo(other) <= 0;
+    }
 
-    boolean lt(Money other);
+    default boolean lt(Money other){
+        return compareTo(other) < 0;
+    }
 
     Money opposite();
 
     RationalMoney convertToRational();
 
+    IntegerMoney convertToInteger();
+
+    static Money valueOf(long cents, Currency currency) {
+        return new IntegerMoney(cents, currency);
+    }
+
+    static Money valueOf(long cents) {
+        return new IntegerMoney(cents, DEFAULT_CURRENCY);
+    }
+
+
+    static Money valueOf(float value){
+        return new IntegerMoney((long) (value * 100.0), DEFAULT_CURRENCY);
+    }
+    /*
     static Money valueOf(long value, Currency currency) {
         return new RationalMoney(Rational.valueOf(value), currency);
     }
@@ -40,6 +63,8 @@ public interface Money extends Comparable<Money>{
     static Money valueOf(long value) {
         return new RationalMoney(Rational.valueOf(value), DEFAULT_CURRENCY);
     }
+
+*/
 
 
 

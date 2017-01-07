@@ -113,6 +113,13 @@ public final class Rational implements Comparable<Rational> {
 
     }
 
+    public long getNumerator(){
+        return numerator;
+    }
+
+    public long getDenominator(){
+        return denominator;
+    }
 
     @Override
 
@@ -122,9 +129,7 @@ public final class Rational implements Comparable<Rational> {
 
         if (!(o instanceof Rational)) return false;
 
-
         Rational number = (Rational) o;
-
 
         return (numerator * number.denominator) == (number.numerator * denominator);
 

@@ -3,7 +3,16 @@ package pl.com.bottega.photostock.sales.module.money;
 /**
  * Created by macie on 10.12.2016.
  */
-class RationalMoney implements Money { //Comparable - interfejs służy fo porównywania obiektów
+
+public class RationalMoney implements Money { //Comparable - interfejs służy fo porównywania obiektów
+
+    private final Rational value;
+    public final Currency currency;
+
+    public RationalMoney(Rational value, Currency currency) {
+        this.value = value;
+        this.currency = currency;
+    }
 
     public Money add(Money addend) {
         RationalMoney rationalMoney = addend.convertToRational();
@@ -32,22 +41,6 @@ class RationalMoney implements Money { //Comparable - interfejs służy fo poró
         return new RationalMoney(value.negative(), currency);
     }
 
-    public boolean gte(Money other){
-        return compareTo(other) >= 0;
-    }
-
-    public boolean gt(Money other){
-        return compareTo(other) > 0;
-    }
-
-    public boolean lte(Money other){
-        return compareTo(other) <= 0;
-    }
-
-    public boolean lt(Money other){
-        return compareTo(other) < 0;
-    }
-
     public int compareTo(Money other){
         RationalMoney rationalMoney = other.convertToRational();
         if (!rationalMoney.currency.equals(currency))
@@ -55,13 +48,6 @@ class RationalMoney implements Money { //Comparable - interfejs służy fo poró
         return value.compareTo(rationalMoney.value);
     }
 
-    private final Rational value;
-    private final Currency currency;
-
-    RationalMoney(Rational value, Currency currency) {
-        this.value = value;
-        this.currency = currency;
-    }
 
     @Override
     public String toString() {
@@ -71,9 +57,18 @@ class RationalMoney implements Money { //Comparable - interfejs służy fo poró
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof RationalMoney)) return false;
+        if (!(o instanceof RationalMoney)) {
+            if (o instanceof IntegerMoney){
+                IntegerMoney money = (IntegerMoney) o;
+                if (!value.equals(money.convertToRational().value)) return false;
+                return currency == money.currency;
+            }
+            else
+                return false;
 
-        RationalMoney money = (RationalMoney) o;
+        }
+
+      RationalMoney money = (RationalMoney) o;
 
         if (!value.equals(money.value)) return false;
         return currency == money.currency;
@@ -89,5 +84,11 @@ class RationalMoney implements Money { //Comparable - interfejs służy fo poró
     @Override
     public RationalMoney convertToRational(){
         return this;
+    }
+
+    @Override
+    public IntegerMoney convertToInteger(){
+        long cents = value.getNumerator()*100/value.getDenominator();
+        return new IntegerMoney(cents, currency);
     }
 }
