@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.module.money;
+package pl.com.bottega.photostock.sales.model.money;
 
 /**
  * Created by macie on 10.12.2016.

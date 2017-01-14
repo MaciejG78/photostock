@@ -1,7 +1,6 @@
-package pl.com.bottega.photostock.sales.module;
+package pl.com.bottega.photostock.sales.model;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 

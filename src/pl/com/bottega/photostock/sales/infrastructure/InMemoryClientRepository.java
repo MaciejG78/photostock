@@ -1,10 +1,10 @@
 package pl.com.bottega.photostock.sales.infrastructure;
 
-import pl.com.bottega.photostock.sales.module.Address;
-import pl.com.bottega.photostock.sales.module.Client;
-import pl.com.bottega.photostock.sales.module.ClientRepository;
-import pl.com.bottega.photostock.sales.module.VipClient;
-import pl.com.bottega.photostock.sales.module.money.Money;
+import pl.com.bottega.photostock.sales.model.Address;
+import pl.com.bottega.photostock.sales.model.Client;
+import pl.com.bottega.photostock.sales.model.ClientRepository;
+import pl.com.bottega.photostock.sales.model.VipClient;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 import java.util.HashMap;
 import java.util.Map;

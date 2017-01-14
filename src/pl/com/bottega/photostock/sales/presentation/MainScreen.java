@@ -1,7 +1,5 @@
 package pl.com.bottega.photostock.sales.presentation;
 
-import pl.com.bottega.photostock.sales.module.LightBox;
-
 import java.util.Scanner;
 
 /**

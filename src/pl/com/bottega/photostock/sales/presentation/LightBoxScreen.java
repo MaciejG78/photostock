@@ -1,8 +1,8 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.LightBoxManagement;
-import pl.com.bottega.photostock.sales.module.LightBox;
-import pl.com.bottega.photostock.sales.module.Product;
+import pl.com.bottega.photostock.sales.model.LightBox;
+import pl.com.bottega.photostock.sales.model.Product;
 
 import java.util.Collection;
 import java.util.Scanner;
@@ -62,11 +62,21 @@ public class LightBoxScreen {
                 showLightBox(cmd[1]);
                 return;
             }
+            if (cmd[0].equals("rezerwuj")) {
+                reserveLightBox(cmd[1]);
+                return;
+            }
         } else if (cmd.length == 3 && cmd[0].equals("dodaj")) {
             addToLightBox(cmd[1], cmd[2]);
             return;
         }
         System.out.println("Sorry nie rozumiem ;(");
+    }
+
+    private void reserveLightBox(String lightBoxName) {
+        lightBoxManagement.reserve(loginScreen.getAuthenticatedClientNumber(), lightBoxName);
+        System.out.println("Produkty zostały zarezerwowane");
+
     }
 
     private void addToLightBox(String ligthBoxName, String productNumber) {
@@ -117,7 +127,8 @@ public class LightBoxScreen {
         System.out.println("1. Aby wyswietlić nazwy wszystkich lighboxow wpisz słowo: pokaz\n" +
                 "2. Aby wyswietlić produkty znajdujace sie w lighboxie o zadanej nazwie wpisz słowo: pokaz [nazwa lightboxa]\n" +
                 "3. Aby dodać do lightboxa o zadanej nazwie produkt o zadanym numerze wpisz słowo: dodaj [nazwa lightboxa] [nr produktu]\n" +
-                "4. Aby powrócić do menu głównego aplikacji wpisz słowo: powrot");
+                "4. Aby zarezerwować produkty z LightBoxa wpisz słowo: rezerwuj [nazwa lightboxa]\n" +
+                "5. Aby powrócić do menu głównego aplikacji wpisz słowo: powrot");
     }
 
 

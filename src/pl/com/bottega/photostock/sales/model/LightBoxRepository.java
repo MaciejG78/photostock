@@ -1,7 +1,4 @@
-package pl.com.bottega.photostock.sales.module;
-
-import pl.com.bottega.photostock.sales.module.Client;
-import pl.com.bottega.photostock.sales.module.LightBox;
+package pl.com.bottega.photostock.sales.model;
 
 import java.util.Collection;
 

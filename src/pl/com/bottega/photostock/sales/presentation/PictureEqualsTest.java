@@ -1,9 +1,9 @@
 package pl.com.bottega.photostock.sales.presentation;
 
-import pl.com.bottega.photostock.sales.module.Clip;
-import pl.com.bottega.photostock.sales.module.money.Money;
-import pl.com.bottega.photostock.sales.module.Picture;
-import pl.com.bottega.photostock.sales.module.Product;
+import pl.com.bottega.photostock.sales.model.Clip;
+import pl.com.bottega.photostock.sales.model.money.Money;
+import pl.com.bottega.photostock.sales.model.Picture;
+import pl.com.bottega.photostock.sales.model.Product;
 
 import java.util.HashSet;
 

@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.module;
+package pl.com.bottega.photostock.sales.model;
 
 import java.util.*;
 
@@ -8,13 +8,22 @@ import java.util.*;
 public class Purchase {
 
     private Client client;
-    private Date purchaseDate;
+    private Date purchaseDate = new Date();
     private List<Product> items;
+    private String number;
 
     public Purchase(Client client, Collection<Product> items) {
         this.client = client;
         this.items = new LinkedList<>(items);
+        this.number = UUID.randomUUID().toString();
         sortProductsByNumberAsc();
+        markProductAsSold();
+    }
+
+    private void markProductAsSold() {
+        for (Product product : items){
+            product.soldPer(client);
+        }
     }
 
 
@@ -36,5 +45,9 @@ public class Purchase {
                 return number1.compareTo(number2); //Domyslne sortowanie rosnąco, żeby wyszło malejące trzeba dodać "-" np.  -number1.compareTo(number2); lub zapis odwrotny number2.compareTo(number1)
             }
         });
+    }
+
+    public String getNumber() {
+        return number;
     }
 }

@@ -1,8 +1,7 @@
 package pl.com.bottega.photostock.sales.infrastructure;
 
-import pl.com.bottega.photostock.sales.module.Reservation;
-import pl.com.bottega.photostock.sales.module.ReservationRepository;
-import pl.com.bottega.photostock.sales.presentation.MainScreen;
+import pl.com.bottega.photostock.sales.model.Reservation;
+import pl.com.bottega.photostock.sales.model.ReservationRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class InMemoryReservationRepository implements ReservationRepository{
     @Override
     public Reservation getActiveReservationForClient(String clientNumber) {
         for (Reservation reservation : REPOSITORY.values()) {
-            if (reservation.isOwnedBy(clientNumber)) ;
+            if (reservation.isOwnedBy(clientNumber) && reservation.isActive()) ;
             return reservation;
         }
         return null;

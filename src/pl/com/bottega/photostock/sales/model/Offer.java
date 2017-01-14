@@ -1,6 +1,6 @@
-package pl.com.bottega.photostock.sales.module;
+package pl.com.bottega.photostock.sales.model;
 
-import pl.com.bottega.photostock.sales.module.money.Money;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 import java.util.*;
 
@@ -19,7 +19,7 @@ public class Offer {
     }
 
     public boolean sameAs(Offer ofther, Money money) {
-        return false;
+        return true;
     }
 
     public int getItemsCount() {

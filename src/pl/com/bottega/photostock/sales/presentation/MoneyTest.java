@@ -1,7 +1,7 @@
 package pl.com.bottega.photostock.sales.presentation;
 
-import pl.com.bottega.photostock.sales.module.money.Rational;
-import pl.com.bottega.photostock.sales.module.money.*;
+import pl.com.bottega.photostock.sales.model.money.Rational;
+import pl.com.bottega.photostock.sales.model.money.*;
 
 /**
  * Created by macie on 01.01.2017.

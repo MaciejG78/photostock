@@ -1,6 +1,6 @@
-package pl.com.bottega.photostock.sales.module;
+package pl.com.bottega.photostock.sales.model;
 
-import pl.com.bottega.photostock.sales.module.money.Money;
+import pl.com.bottega.photostock.sales.model.money.Money;
 
 /**
  * Created by macie on 17.12.2016.
