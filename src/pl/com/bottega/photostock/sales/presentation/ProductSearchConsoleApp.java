@@ -2,8 +2,11 @@ package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.ProductCatalog;
 import pl.com.bottega.photostock.sales.infrastructure.InMemoryProductRepository;
-import pl.com.bottega.photostock.sales.model.*;
+import pl.com.bottega.photostock.sales.model.client.Address;
+import pl.com.bottega.photostock.sales.model.client.Client;
+import pl.com.bottega.photostock.sales.model.client.VipClient;
 import pl.com.bottega.photostock.sales.model.money.Money;
+import pl.com.bottega.photostock.sales.model.product.Product;
 
 import java.util.InputMismatchException;
 import java.util.List;
