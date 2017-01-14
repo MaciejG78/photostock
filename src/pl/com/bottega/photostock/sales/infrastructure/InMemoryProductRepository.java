@@ -1,5 +1,6 @@
-package pl.com.bottega.photostock.sales.module;
+package pl.com.bottega.photostock.sales.infrastructure;
 
+import pl.com.bottega.photostock.sales.module.*;
 import pl.com.bottega.photostock.sales.module.money.Money;
 
 import java.util.*;

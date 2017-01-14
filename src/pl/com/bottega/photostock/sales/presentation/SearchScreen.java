@@ -1,8 +1,8 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.ProductCatalog;
-import pl.com.bottega.photostock.sales.infrastructure.InMemoryProductRepository;
-import pl.com.bottega.photostock.sales.module.*;
+import pl.com.bottega.photostock.sales.module.Client;
+import pl.com.bottega.photostock.sales.module.Product;
 import pl.com.bottega.photostock.sales.module.money.Money;
 
 import java.util.InputMismatchException;
@@ -12,26 +12,28 @@ import java.util.Scanner;
 /**
  * Created by macie on 07.01.2017.
  */
-public class ProductSearchConsoleApp {
+public class SearchScreen {
+    private Scanner scanner;
+    private final ProductCatalog productCatalog;
+    private LoginScreen loginScreen;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        ProductCatalog productCatalog = new ProductCatalog(new InMemoryProductRepository());
-
-        Client client = new VipClient("John Doe", new Address(), Money.ZERO, Money.valueOf(2000));
-
-        while (true) {
-            String name = getQuery(scanner);
-            String[] tags = getTags(scanner);
-            Money priceFrom = getMoney("Cena od: ", scanner);
-            Money priceTo = getMoney("Cena do: ", scanner);
-            List<Product> products = productCatalog.find(client, name, tags, priceFrom, priceTo);
-            printProducts(client, products);
-        }
+    public SearchScreen(Scanner scanner, ProductCatalog productCatalog, LoginScreen loginScreen){
+        this.scanner = scanner;
+        this.productCatalog = productCatalog;
+        this.loginScreen = loginScreen;
     }
 
-    private static void printProducts(Client client, List<Product> products) {
-        System.out.println("Matching products: ");
+    public void print() {
+        String name = getQuery();
+        String[] tags = getTags();
+        Money priceFrom = getMoney("Cena od: ");
+        Money priceTo = getMoney("Cena do: ");
+        List<Product> products = productCatalog.find(loginScreen.getClient(), name, tags, priceFrom, priceTo);
+        printProducts(loginScreen.getClient(), products);
+    }
+
+    private void printProducts(Client client, List<Product> products) {
+        System.out.println("Wyszukane produkty: ");
         for (Product product : products) {
             System.out.println(String.format("%s | %s %s",
                     product.getNumber(),
@@ -41,10 +43,9 @@ public class ProductSearchConsoleApp {
         }
     }
 
-    private static Money getMoney(String prompt, Scanner scanner) {
+    private Money getMoney(String prompt) {
         while (true) {
             try {
-
                 System.out.println(prompt + ": ");
                 float f = scanner.nextFloat();
                 scanner.nextLine();
@@ -57,7 +58,7 @@ public class ProductSearchConsoleApp {
         }
     }
 
-    private static String[] getTags(Scanner scanner) {
+    private String[] getTags() {
         System.out.println("Tagi: ");
         String tagsRead = scanner.nextLine().trim();
         if (tagsRead.length() == 0)
@@ -66,7 +67,7 @@ public class ProductSearchConsoleApp {
             return tagsRead.split(" ");
     }
 
-    private static String getQuery(Scanner scanner) {
+    private String getQuery() {
         System.out.println("Nazwa: ");
         return scanner.nextLine();
     }

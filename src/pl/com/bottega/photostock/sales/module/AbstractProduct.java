@@ -49,7 +49,7 @@ public abstract class AbstractProduct implements Product {
 
     private void ensureReservedBy(Client client) {
         if (!isReservedBy(client))
-            throw new IllegalArgumentException(String.format("Client &s is not reserved by %s", getNumber(), client.getName));
+            throw new IllegalArgumentException(String.format("Client &s is not reserved by %s", getNumber(), client.getNumber()));
     }
 
     private boolean isReservedBy(Client client) {

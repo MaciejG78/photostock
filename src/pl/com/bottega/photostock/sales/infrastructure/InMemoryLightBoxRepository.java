@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.module;
+package pl.com.bottega.photostock.sales.infrastructure;
 
 import pl.com.bottega.photostock.sales.module.Client;
 import pl.com.bottega.photostock.sales.module.LightBox;
@@ -11,17 +11,47 @@ import java.util.*;
  */
 public class InMemoryLightBoxRepository implements LightBoxRepository {
 
-    Map<Client, Collection<LightBox>> memoryLightBoxRepository = new HashMap<>();
+    private static final Map<Client, Collection<LightBox>> REPOSITORY = new HashMap<>();
 
+    @Override
     public void put(LightBox lightBox) {
-        Client client = lightBox.getOwner();
-        Collection<LightBox> lightBoxPerClient = memoryLightBoxRepository.get(client);
-        if (lightBoxPerClient == null) {
-            lightBoxPerClient = new HashSet<>();//tworzę i mam do niego referencję
-            memoryLightBoxRepository.put(client, lightBoxPerClient);             //lightBoxPerClient = memoryLightBoxRepository.get(client);//nie musze pobierac z mapy bo mam do niego referencję
-        }
-        lightBoxPerClient.add(lightBox);//uzywam referencji nie wnikajac skąd sie wziela - swieżo stworzona czy pobrana z dawien dawna
+        Client owner = lightBox.getOwner();
+        REPOSITORY.putIfAbsent(owner, new HashSet<>());
+        REPOSITORY.get(owner).add(lightBox);
     }
+
+    @Override
+    public Collection<LightBox> getFor(Client client) {
+        Collection<LightBox> temporaryStorage = new HashSet<>();
+
+        if (REPOSITORY.containsKey(client))
+            temporaryStorage.addAll(REPOSITORY.get(client));
+        else
+            throw new IllegalArgumentException("There are no LightBoxes stored for this client.");
+
+        return temporaryStorage;
+    }
+
+    @Override
+    public Collection<String> getLightBoxNames(Client client) {
+        Collection<String> lightBoxNames = new LinkedList<>();
+        Collection<LightBox> lightBoxes = REPOSITORY.get(client);
+        if(lightBoxes != null)
+            for(LightBox lb : lightBoxes)
+                lightBoxNames.add(lb.getName());
+        return lightBoxNames;
+    }
+
+    @Override
+    public LightBox findLightBox(Client client, String lightBoxName) {
+        Collection<LightBox> lightBoxes = REPOSITORY.get(client);
+        if(lightBoxes != null)
+            for(LightBox lb : lightBoxes)
+                if(lb.getName().equals(lightBoxName))
+                    return lb;
+        return null;
+    }
+}
 
 
     /* Wersja 1
@@ -36,7 +66,7 @@ public class InMemoryLightBoxRepository implements LightBoxRepository {
        }
 
 
-     /* Wersja 2
+/* Wersja 2
        @Override
        public void put(LightBox lightBox) {
            Client client = lightBox.getOwner();
@@ -58,8 +88,3 @@ public class InMemoryLightBoxRepository implements LightBoxRepository {
            lightBoxPerClient.add(lightBox);
        }
     */
-    @Override
-    public Collection<LightBox> getFor(Client client) {
-        return memoryLightBoxRepository.get(client);
-    }
-}

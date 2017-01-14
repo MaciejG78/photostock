@@ -63,7 +63,7 @@ public class IntegerMoney implements Money {
 
     @Override
     public String toString() {
-        return cents + " " + currency.name();
+        return cents / 100 + " " + currency.name();
     }
 
     @Override
