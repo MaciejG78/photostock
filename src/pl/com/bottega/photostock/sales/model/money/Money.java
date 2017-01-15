@@ -51,6 +51,18 @@ public interface Money extends Comparable<Money> {
     static Money valueOf(float value) {
         return new IntegerMoney((long) ((value + 0.001) * 100.0), DEFAULT_CURRENCY);
     }
+
+    //100.00 CREDIT
+    static Money valueOf(String moneyString) {
+        String[] moneyComponents = moneyString.split(" ");
+        if (moneyComponents.length != 1 && moneyComponents.length != 2)
+            throw new IllegalArgumentException("Inwalid money format");
+        long value = (long) (Double.parseDouble(moneyComponents[0]) * 100.0);
+        if (moneyComponents.length == 2){
+            return  new IntegerMoney(value, Currency.valueOf(moneyComponents[1]));
+        }
+        return new IntegerMoney(value, DEFAULT_CURRENCY);
+    }
     /*
     static Money valueOf(long value, Currency currency) {
         return new RationalMoney(Rational.valueOf(value), currency);

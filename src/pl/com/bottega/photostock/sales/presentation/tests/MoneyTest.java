@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.presentation;
+package pl.com.bottega.photostock.sales.presentation.tests;
 
 import pl.com.bottega.photostock.sales.model.money.Rational;
 import pl.com.bottega.photostock.sales.model.money.*;

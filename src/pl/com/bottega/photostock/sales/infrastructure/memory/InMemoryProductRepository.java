@@ -1,4 +1,4 @@
-package pl.com.bottega.photostock.sales.infrastructure;
+package pl.com.bottega.photostock.sales.infrastructure.memory;
 
 import pl.com.bottega.photostock.sales.model.client.Client;
 import pl.com.bottega.photostock.sales.model.money.Money;
@@ -60,12 +60,17 @@ public class InMemoryProductRepository implements ProductRepository {
         return matchingProducts;
     }
 
-    private boolean matches(Client client, Product product, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyActive) {
+    private boolean matches(Client client, Product product, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyAvailable) {
 
         return matchesQuery(product, nameQuery) &&
                 matchesTags(product, tags) &&
                 matchesPriceFrom(client, product, priceFrom) &&
-                matchesPriceTo(client, product, priceTo);
+                matchesPriceTo(client, product, priceTo) &&
+                matchesOnlyActive(product, onlyAvailable);
+    }
+
+    private boolean matchesOnlyActive(Product product, boolean onlyAvailable) {
+        return !onlyAvailable || product.isAvailable();
     }
 
     private boolean matchesPriceTo(Client client, Product product, Money priceTo) {

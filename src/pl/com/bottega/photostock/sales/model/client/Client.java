@@ -18,21 +18,26 @@ public class Client {
 
     protected Money balance;
     private Collection<Transaction> transactions;
-    private boolean active = true;
+    private boolean active;
     private String number;
 
     //public Object getName;
 
     public Client(String name, Address address, ClientStatus status, Money initialbalance) {
+        this(nextNumber(), name, address, status, initialbalance, true, new LinkedList<>());
+        if (!initialbalance.equals(Money.ZERO))
+            this.transactions.add(new Transaction(initialbalance, "Openning account."));
+    }
+
+    public Client(String number, String name, Address address, ClientStatus status,
+                  Money initialbalance, boolean active, Collection<Transaction> transactions) {
         this.name = name;
         this.address = address;
         this.status = status;
         this.balance = initialbalance;
-        this.transactions = new LinkedList<>();
-        this.number = nextNumber();
-
-        if (!initialbalance.equals(Money.ZERO))
-            this.transactions.add(new Transaction(initialbalance, "Openning account."));
+        this.active = active;
+        this.transactions = new LinkedList<>(transactions);
+        this.number = number;
     }
 
     private static String nextNumber() {
@@ -95,4 +100,11 @@ public class Client {
         return number;
     }
 
+    public ClientStatus getStatus() {
+        return status;
+    }
+
+    public Money getBalance() {
+        return balance;
+    }
 }

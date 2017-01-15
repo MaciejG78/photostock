@@ -4,7 +4,8 @@ import pl.com.bottega.photostock.sales.application.AuthenticationProcess;
 import pl.com.bottega.photostock.sales.application.LightBoxManagement;
 import pl.com.bottega.photostock.sales.application.ProductCatalog;
 import pl.com.bottega.photostock.sales.application.PurchaseProcess;
-import pl.com.bottega.photostock.sales.infrastructure.*;
+import pl.com.bottega.photostock.sales.infrastructure.csv.CSVClientRepository;
+import pl.com.bottega.photostock.sales.infrastructure.memory.*;
 import pl.com.bottega.photostock.sales.model.client.ClientRepository;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
 import pl.com.bottega.photostock.sales.model.product.ProductRepository;
@@ -29,7 +30,7 @@ public class LightBoxMain {
         Scanner scanner = new Scanner(System.in);
         ProductRepository productRepository = new InMemoryProductRepository();
         ProductCatalog productCatalog = new ProductCatalog(productRepository);
-        ClientRepository clientRepository = new InMemoryClientRepository();
+        ClientRepository clientRepository = new CSVClientRepository("C:\\Bottega_Java\\Projekty\\photostock\\data\\clients.csv");
         AuthenticationProcess authenticationProcess = new AuthenticationProcess(clientRepository);
         ReservationRepository reservationRepository = new InMemoryReservationRepository();
         PurchaseRepository purchaseRepository = new InMemoryPurchaseRepository();
