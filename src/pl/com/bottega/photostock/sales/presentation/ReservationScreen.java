@@ -26,7 +26,7 @@ public class ReservationScreen {
                 String clientNumber = loginScreen.getAuthenticatedClientNumber();
                 String reservationNumber = purchaseProcess.getReservation(clientNumber);
                 purchaseProcess.add(reservationNumber, productNumber);
-                System.out.println(String.format("Produkt %s został dodany do rezerwacji %S", productNumber, reservationNumber));
+                System.out.println(String.format("Produkt %s został dodany do rezerwacji %s", productNumber, reservationNumber));
                 return;
             }
             catch (ProductNotAvailableException ex){

@@ -60,6 +60,15 @@ public class InMemoryProductRepository implements ProductRepository {
         return matchingProducts;
     }
 
+    @Override
+    public Product checkIfAvailable(String productNumber, Boolean onlyAvailable) {
+        Product product = get(productNumber);
+        if (product == null || !matchesOnlyActive(product, onlyAvailable))
+            return null;
+        else
+            return product;
+    }
+
     private boolean matches(Client client, Product product, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyAvailable) {
 
         return matchesQuery(product, nameQuery) &&

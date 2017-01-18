@@ -14,4 +14,7 @@ public interface ProductRepository {
     Product get(String number);
 
     List<Product> find(Client client, String nameQuery, String[] tags, Money priceFrom, Money priceTo, boolean onlyActive);
+
+    Product checkIfAvailable(String product, Boolean onlyAvailable);
+
 }

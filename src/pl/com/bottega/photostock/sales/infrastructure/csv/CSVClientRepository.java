@@ -14,11 +14,11 @@ import java.util.LinkedList;
  */
 public class CSVClientRepository implements ClientRepository {
 
-    private String path;
-    private String tmpPath;
+    private String path, tmpPath, folderPath;
 
-    public CSVClientRepository(String path) {
-        this.path = path;
+    public CSVClientRepository(String folderPath) {
+        this.folderPath = folderPath;
+        this.path = folderPath + File.separator + "clients.csv";
         this.tmpPath = path + ".tmp";
     }
 
@@ -61,6 +61,12 @@ public class CSVClientRepository implements ClientRepository {
             throw new DataAccessException(e);
         }
         replaceFiles();
+        updateTransactions(client);
+    }
+
+    private void updateTransactions(Client client) {
+        CSVTransactionsRepository transactionsRepository = new CSVTransactionsRepository(folderPath);
+        transactionsRepository.saveTransactions(client.getNumber(), client.getTransactions());
     }
 
     private void writeClient(Client client, PrintWriter printWriter) {
