@@ -20,8 +20,10 @@ public class MainScreen {
         this.lightBoxScreen = lightBoxScreen;
     }
 
+    boolean exit = false;
+
     public void print() {
-        while (true){
+        while (!exit) {
             printMenu();
             String command = getCommand();
             executeCommand(command);
@@ -42,6 +44,9 @@ public class MainScreen {
             case "4":
                 lightBoxScreen.print();
                 break;
+            case "5":
+                exit = true;
+                break;
             default:
                 System.out.println("Sorry, nie rozumien ;(");
         }
@@ -57,5 +62,6 @@ public class MainScreen {
         System.out.println("2. Zarezerwuj produkt");
         System.out.println("3. Wygeneruj ofertę");
         System.out.println("4. Zarządzaj LightBoxami");
+        System.out.println("5. Wyjście");
     }
 }

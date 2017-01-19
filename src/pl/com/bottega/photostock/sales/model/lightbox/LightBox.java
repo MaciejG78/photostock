@@ -16,7 +16,6 @@ public class LightBox implements Iterable<Product> {
     private Client client;
     private Collection<Product> items = new LinkedList<>();
 
-
     public LightBox(Client client, String name) {
         this.client = client;
         this.name = name;
@@ -27,10 +26,7 @@ public class LightBox implements Iterable<Product> {
             throw new IllegalArgumentException(String.format("LightBox already contain this picture %s", product.getNumber()));
         product.ensureAvailable();
         items.add(product);
-        //TODO tutaj wywołać put
-
     }
-
 
     public void remove(Product product) {
         if (items.contains(product))
@@ -61,10 +57,8 @@ public class LightBox implements Iterable<Product> {
             for (Product product : lightBox) {
                 if (!output.items.contains(product) && product.isActive())
                     output.items.add(product); //można napisać krócej output.add(picture); ale wtedy ponownie wykonywana byłąby walidacja
-
             }
         }
-
         return output;
     }
 }

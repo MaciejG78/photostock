@@ -6,8 +6,11 @@ import pl.com.bottega.photostock.sales.application.ProductCatalog;
 import pl.com.bottega.photostock.sales.application.PurchaseProcess;
 import pl.com.bottega.photostock.sales.infrastructure.csv.CSVClientRepository;
 import pl.com.bottega.photostock.sales.infrastructure.csv.CSVLightBoxRepository;
+import pl.com.bottega.photostock.sales.infrastructure.csv.CSVTransactionsRepository;
 import pl.com.bottega.photostock.sales.infrastructure.memory.*;
 import pl.com.bottega.photostock.sales.model.client.ClientRepository;
+import pl.com.bottega.photostock.sales.model.client.Transaction;
+import pl.com.bottega.photostock.sales.model.client.TransactionRepository;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
 import pl.com.bottega.photostock.sales.model.product.ProductRepository;
 import pl.com.bottega.photostock.sales.model.purchase.PurchaseRepository;
@@ -31,6 +34,7 @@ public class LightBoxMain {
         Scanner scanner = new Scanner(System.in);
         ProductRepository productRepository = new InMemoryProductRepository();
         ProductCatalog productCatalog = new ProductCatalog(productRepository);
+        TransactionRepository transactionRepository = new CSVTransactionsRepository("C:\\Bottega_Java\\Projekty\\photostock\\data");
         ClientRepository clientRepository = new CSVClientRepository("C:\\Bottega_Java\\Projekty\\photostock\\data");
         AuthenticationProcess authenticationProcess = new AuthenticationProcess(clientRepository);
         ReservationRepository reservationRepository = new InMemoryReservationRepository();
@@ -42,7 +46,7 @@ public class LightBoxMain {
         searchScreen = new SearchScreen(scanner, productCatalog, loginScreen);
         reservationScreen = new ReservationScreen(scanner, loginScreen, purchaseProcess);
         offerScreen = new OfferScreen(scanner, loginScreen, purchaseProcess);
-        lightBoxScreen = new LightBoxScreen(scanner, loginScreen, lightBoxManagement);
+        lightBoxScreen = new LightBoxScreen(scanner, loginScreen, lightBoxManagement, transactionRepository);
         mainScreen = new MainScreen(scanner, searchScreen, reservationScreen, offerScreen, lightBoxScreen);
     }
 

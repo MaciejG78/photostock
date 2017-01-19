@@ -27,8 +27,7 @@ public class CSVLightBoxRepository implements LightBoxRepository{
         this.tmpPath = path + ".tmp";
     }
 
-
-//TODO dorobić metodę put
+    //clientNumber, lightBoxName, numberOfProduct|numberOfProduct itd.
     @Override
     public void put(LightBox lightBox) {
         Client owner = lightBox.getOwner();
@@ -61,16 +60,21 @@ public class CSVLightBoxRepository implements LightBoxRepository{
         String productNumbersInLightBox = "";
         for (Product productInLightBox : lightBox) {
             productNumbersInLightBox += productInLightBox.getNumber() + "|";
-            productNumbersInLightBox = productNumbersInLightBox.substring(0, productNumbersInLightBox.length() - 1);
         }
-        if (productNumbersInLightBox.equals(""))
-            productNumbersInLightBox = " ";
-
-        String[] attributes = new String[] {
-                lightBox.getOwner().getNumber(),
-                lightBox.getName(),
-                productNumbersInLightBox
-        };
+        productNumbersInLightBox = productNumbersInLightBox.substring(0, productNumbersInLightBox.length() - 1);
+        String[] attributes;
+        if (productNumbersInLightBox.equals("")) {
+            attributes = new String[]{
+                    lightBox.getOwner().getNumber(),
+                    lightBox.getName()
+            };
+        } else {
+            attributes = new String[]{
+                    lightBox.getOwner().getNumber(),
+                    lightBox.getName(),
+                    productNumbersInLightBox
+            };
+        }
         printWriter.println(StringUtils.join(Arrays.asList(attributes), ","));
     }
 
@@ -125,7 +129,6 @@ public class CSVLightBoxRepository implements LightBoxRepository{
                 lightBoxNames.add(lb.getName());
         return lightBoxNames;
     }
-
 
 
     private void replaceFiles() {

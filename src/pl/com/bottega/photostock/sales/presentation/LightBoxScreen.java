@@ -1,6 +1,9 @@
 package pl.com.bottega.photostock.sales.presentation;
 
 import pl.com.bottega.photostock.sales.application.LightBoxManagement;
+import pl.com.bottega.photostock.sales.infrastructure.csv.CSVTransactionsRepository;
+import pl.com.bottega.photostock.sales.model.client.Transaction;
+import pl.com.bottega.photostock.sales.model.client.TransactionRepository;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
 import pl.com.bottega.photostock.sales.model.product.Product;
 
@@ -8,30 +11,32 @@ import java.util.Collection;
 import java.util.Scanner;
 
 /**
- Created by maciek on 07.01.2017.
- Na w.w. user może wydawać następujące komendy:
- pokaz -> powoduje wyswietlenie nazw wszystkich lighboxow
- pokaz [nazwa lightboxa] -> powoduje wyswietlenie produktow znajdujacych sie w lighboxie o zadanej nazwie
- dodaj [nazwa lightboxa] [nr produktu] -> powoduje dodanie do lightboxa o zadanej nazwie produktu o zadanym numerze
- powrot -> powoduje powrot do menu głównego aplikacji
- wpisanie błędnej komendy powoduje wyświetlenie komunikatu -> "Sorry nie rozumiem"
-
- Podpowiedź. W metodzie print() klasy LightBoxScreen napisz nieskończoną pętlę która pobiera stringa i patrzy
- czy w podanym stringu jest któraś z wymienionych komend. Do parsowania stringa użyj metody split() klasy string.
- Wykonanie każdej z w.w. komend powinno być, zgodnie z regułami arch, warstwowej delegowane do następnej warstwy
- t.j. do warstwy aplikacji. I tu stwórz klasę LightBoxManagement:
+ * Created by maciek on 07.01.2017.
+ * Na w.w. user może wydawać następujące komendy:
+ * pokaz -> powoduje wyswietlenie nazw wszystkich lighboxow
+ * pokaz [nazwa lightboxa] -> powoduje wyswietlenie produktow znajdujacych sie w lighboxie o zadanej nazwie
+ * dodaj [nazwa lightboxa] [nr produktu] -> powoduje dodanie do lightboxa o zadanej nazwie produktu o zadanym numerze
+ * powrot -> powoduje powrot do menu głównego aplikacji
+ * wpisanie błędnej komendy powoduje wyświetlenie komunikatu -> "Sorry nie rozumiem"
+ * <p>
+ * Podpowiedź. W metodzie print() klasy LightBoxScreen napisz nieskończoną pętlę która pobiera stringa i patrzy
+ * czy w podanym stringu jest któraś z wymienionych komend. Do parsowania stringa użyj metody split() klasy string.
+ * Wykonanie każdej z w.w. komend powinno być, zgodnie z regułami arch, warstwowej delegowane do następnej warstwy
+ * t.j. do warstwy aplikacji. I tu stwórz klasę LightBoxManagement:
  */
 public class LightBoxScreen {
 
     private Scanner scanner;
     private final LoginScreen loginScreen;
     private final LightBoxManagement lightBoxManagement;
+    private TransactionRepository transactionRepository;
     private boolean exit;
 
-    public LightBoxScreen(Scanner scanner, LoginScreen loginScreen, LightBoxManagement lightBoxManagement) {
+    public LightBoxScreen(Scanner scanner, LoginScreen loginScreen, LightBoxManagement lightBoxManagement, TransactionRepository transactionRepository) {
         this.scanner = scanner;
         this.loginScreen = loginScreen;
         this.lightBoxManagement = lightBoxManagement;
+        this.transactionRepository = transactionRepository;
     }
 
     public void print() {
@@ -53,6 +58,10 @@ public class LightBoxScreen {
                 showLightBoxes();
                 return;
             }
+            if (cmd[0].equals("transakcje")) {
+                showTransactions();
+                return;
+            }
             if (cmd[0].equals("powrot")) {
                 exit = true;
                 return;
@@ -71,6 +80,21 @@ public class LightBoxScreen {
             return;
         }
         System.out.println("Sorry nie rozumiem ;(");
+    }
+
+    private void showTransactions() {
+        String clientNumber = loginScreen.getAuthenticatedClientNumber();
+        Collection<Transaction> transactions = transactionRepository.getTransactions(clientNumber);
+        if (transactions == null) {
+            System.out.println("Nie masz aktualnie żadnych transakcji na koncie");
+        } else {
+            int i = 1;
+            for (Transaction transaction : transactions) {
+                System.out.println(i + ". Wartość transakcji:" + transaction.getValue() + ", Opis transakcji: " + transaction.getDescription());
+                i++;
+            }
+        }
+
     }
 
     private void reserveLightBox(String lightBoxName) {
@@ -128,7 +152,8 @@ public class LightBoxScreen {
                 "2. Aby wyswietlić produkty znajdujace sie w lighboxie o zadanej nazwie wpisz słowo: pokaz [nazwa lightboxa]\n" +
                 "3. Aby dodać do lightboxa o zadanej nazwie produkt o zadanym numerze wpisz słowo: dodaj [nazwa lightboxa] [nr produktu]\n" +
                 "4. Aby zarezerwować produkty z LightBoxa wpisz słowo: rezerwuj [nazwa lightboxa]\n" +
-                "5. Aby powrócić do menu głównego aplikacji wpisz słowo: powrot");
+                "5. Aby pokazać transakcje klienta wpisz słowo: transakcje\n" +
+                "6. Aby powrócić do menu głównego aplikacji wpisz słowo: powrot");
     }
 
 

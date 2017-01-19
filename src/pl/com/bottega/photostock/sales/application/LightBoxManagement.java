@@ -63,14 +63,13 @@ public class LightBoxManagement {
         }
         LightBox lightBox = getOrCreateLightBox(lightBoxName, client);
         lightBox.add(product);
-        lightBoxRepository.put(lightBox); //dodałem przy tworzeniu CSVLightBoxRepository
+        lightBoxRepository.put(lightBox);
     }
 
     private LightBox getOrCreateLightBox(String lightBoxName, Client client) {
         LightBox lightBox = lightBoxRepository.findLightBox(client, lightBoxName);
         if (lightBox == null) {
             lightBox = new LightBox(client, lightBoxName);
-            lightBoxRepository.put(lightBox);
         }
         return lightBox;
     }
