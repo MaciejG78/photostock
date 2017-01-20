@@ -101,7 +101,7 @@ public class LightBoxScreen {
     }
 
     private void showLightBox(String lightBoxName) {
-        LightBox lightBox = null;
+        LightBox lightBox;
         try {
             lightBox = lightBoxManagement.getLightBox(loginScreen.getAuthenticatedClientNumber(), lightBoxName);
         } catch (IllegalArgumentException ex) {

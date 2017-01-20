@@ -91,23 +91,30 @@ public class CSVLightBoxRepository implements LightBoxRepository {
                 String[] attributes = line.trim().split(",");
                 String numberOfClient = attributes[0];
                 if (numberOfClient.equals(client.getNumber())) {
-                    LightBox lightBox = new LightBox(client, attributes[1]);
-                    if (attributes.length == 3) {
-                        String[] productsForClient = attributes[2].split("\\|");
-
-                        //TODO metodę add zmienić na coś innego
-                        for (String product : productsForClient) {
-                            Product checkedProduct = productRepository.get(product);
-                            lightBox.add(checkedProduct);
-                        }
+                    if (attributes.length == 2) {
+                        temporaryStorage.add(new LightBox(client, attributes[1]));
+                    } else {
+                        temporaryStorage.add(new LightBox(client, attributes[1], getProducts(attributes[2])));
                     }
-                    temporaryStorage.add(lightBox);
                 }
             }
             return temporaryStorage;
         } catch (Exception e) {
             throw new DataAccessException(e);
         }
+    }
+
+    private List<Product> getProducts(String numbers) {
+        List<Product> items = new LinkedList<>();
+        String[] numbersOfProducts = numbers.split("\\|");
+        for (String productNumber : numbersOfProducts) {
+            Product product = productRepository.get(productNumber);
+            if (product == null) {
+                throw new IllegalArgumentException(String.format("Brak produktu nr %s", productNumber));
+            } else
+                items.add(product);
+        }
+        return items;
     }
 
     @Override

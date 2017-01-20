@@ -6,6 +6,7 @@ import pl.com.bottega.photostock.sales.model.product.Product;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by macie on 10.12.2016.
@@ -14,11 +15,18 @@ public class LightBox implements Iterable<Product> {
 
     private String name;
     private Client client;
-    private Collection<Product> items = new LinkedList<>();
+    private List<Product> items = new LinkedList<>();
 
     public LightBox(Client client, String name) {
         this.client = client;
         this.name = name;
+        this.items = items;
+    }
+
+    public LightBox(Client client, String name, List<Product> items) {
+        this.client = client;
+        this.name = name;
+        this.items = items;
     }
 
     public void add(Product product) {
@@ -52,12 +60,16 @@ public class LightBox implements Iterable<Product> {
         return client;
     }
 
+    public List<Product> getProducts() {
+        return items;
+    }
+
     public static LightBox joined(Client client, String name, LightBox... lightBoxes) {
         LightBox output = new LightBox(client, name);
         for (LightBox lightBox : lightBoxes) {
             for (Product product : lightBox) {
                 if (!output.items.contains(product) && product.isActive())
-                    output.items.add(product); //można napisać krócej output.add(picture); ale wtedy ponownie wykonywana byłąby walidacja
+                    output.items.add(product); //można napisać krócej output.add(picture); ale wtedy ponownie wykonywana byłaby walidacja
             }
         }
         return output;
