@@ -8,6 +8,7 @@ import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
 import pl.com.bottega.photostock.sales.model.product.Product;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -139,29 +140,3 @@ public class LightBoxScreen {
 
 
 }
-    /*
-    private void executeCommand(String command) {
-        String[] commandTab = command.split("\\s");
-        if (commandTab.length == 0)
-            System.out.println("Wprowadź jakiąś komendę !!!");
-        else {
-            if (commandTab[0].equals("pokaz") && commandTab.length == 1)
-                lightBoxManagement.getLighBoxNames(loginScreen.getAuthenticatedClientNumber());
-            else if (commandTab[0].equals("pokaz") && commandTab[1].matches("\\[.*\\]") && commandTab.length == 2)
-                System.out.println("Wybrałeś 'pokaz[lightbox]'");
-            else if (commandTab[0].equals("dodaj") && commandTab[1].matches("\\[.*\\]") && commandTab[2].matches("\\[.*\\]") && commandTab.length == 3)
-                System.out.println("Wybrałeś 'dodaj[lightbox][produkt]'");
-            else if (commandTab[0].equals("powrot") && commandTab.length == 1)
-                mainScreen.print(); //System.out.println("Wybrałeś 'powrot'");
-            else
-                System.out.println("Sorry, nie rozumien ;(");
-        }
-    }
-
-    private String getCommand() {
-        System.out.print("Co chcesz zrobić: \n");
-        return scanner.nextLine();
-    }
-*/
-
-

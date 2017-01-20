@@ -1,5 +1,6 @@
 package pl.com.bottega.photostock.sales.infrastructure.csv;
 
+import com.sun.deploy.util.ArrayUtil;
 import com.sun.deploy.util.StringUtils;
 import pl.com.bottega.photostock.sales.model.client.Client;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
@@ -13,7 +14,7 @@ import java.util.*;
 /**
  * Created by macie on 16.01.2017.
  */
-public class CSVLightBoxRepository implements LightBoxRepository{
+public class CSVLightBoxRepository implements LightBoxRepository {
 
     private String path, tmpPath, folderPath;
 
@@ -35,21 +36,22 @@ public class CSVLightBoxRepository implements LightBoxRepository{
         try (
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
                 PrintWriter printWriter = new PrintWriter(new FileWriter(tmpPath))
-        ){
+        ) {
             String line;
-            while ((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] attributes = line.trim().split(",");
                 String numberOfClient = attributes[0];
                 if (numberOfClient.equals(owner.getNumber()) && lightBox.getName().equals(attributes[1])) {
                     writeLightBox(lightBox, printWriter);
                     isNewLightBoxForClient = false;
-                }
-                else
+                } else
                     printWriter.println(line);
             }
-            if (isNewLightBoxForClient){
+            if (isNewLightBoxForClient) {
                 writeLightBox(lightBox, printWriter);
             }
+            bufferedReader.close();
+            printWriter.close();
         } catch (Exception e) {
             throw new DataAccessException(e);
         }
@@ -83,28 +85,26 @@ public class CSVLightBoxRepository implements LightBoxRepository{
     public Collection<LightBox> getFor(Client client) {
         Collection<LightBox> temporaryStorage = new HashSet<>();
 
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(path))) {
             String line;
-            while ((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 String[] attributes = line.trim().split(",");
                 String numberOfClient = attributes[0];
                 if (numberOfClient.equals(client.getNumber())) {
-                    LightBox temporaryLightBox = new LightBox(client, attributes[1]);
-                    String[] productsForClient = attributes[2].split("\\|");
+                    LightBox lightBox = new LightBox(client, attributes[1]);
+                    if (attributes.length == 3) {
+                        String[] productsForClient = attributes[2].split("\\|");
 
-                    //TODO metodę add zmienić na coś innego
-
+                        //TODO metodę add zmienić na coś innego
                         for (String product : productsForClient) {
-                            Product checkedProduct = productRepository.checkIfAvailable(product, true);
-                            if (checkedProduct != null)
-                                temporaryLightBox.add(checkedProduct);
-
+                            Product checkedProduct = productRepository.get(product);
+                            lightBox.add(checkedProduct);
                         }
-                    temporaryStorage.add(temporaryLightBox);
+                    }
+                    temporaryStorage.add(lightBox);
                 }
             }
-                return temporaryStorage;
-
+            return temporaryStorage;
         } catch (Exception e) {
             throw new DataAccessException(e);
         }
@@ -113,9 +113,9 @@ public class CSVLightBoxRepository implements LightBoxRepository{
     @Override
     public LightBox findLightBox(Client client, String lightBoxName) {
         Collection<LightBox> lightBoxes = getFor(client);
-        if(lightBoxes != null)
-            for(LightBox lb : lightBoxes)
-                if(lb.getName().equals(lightBoxName))
+        if (lightBoxes != null)
+            for (LightBox lb : lightBoxes)
+                if (lb.getName().equals(lightBoxName))
                     return lb;
         return null;
     }
@@ -124,8 +124,8 @@ public class CSVLightBoxRepository implements LightBoxRepository{
     public Collection<String> getLightBoxNames(Client client) {
         Collection<String> lightBoxNames = new LinkedList<>();
         Collection<LightBox> lightBoxes = getFor(client);
-        if(lightBoxes != null)
-            for(LightBox lb : lightBoxes)
+        if (lightBoxes != null)
+            for (LightBox lb : lightBoxes)
                 lightBoxNames.add(lb.getName());
         return lightBoxNames;
     }

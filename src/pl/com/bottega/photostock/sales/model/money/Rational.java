@@ -150,35 +150,4 @@ public final class Rational implements Comparable<Rational> {
     }
 
 
-
-	/*
-
-	TODO
-
-	arytmetyka - done
-
-	upraszczanie - done
-
-	rozszerzenie - dropped
-
-	dodawanie - done
-
-	odejmowanie - done
-
-	mnożenie - done
-
-	dzielenie - done
-
-	comparable - done
-
-
-
-	- - - - -
-
-	toString
-
-	zaimplementować upraszczanie na liczbach pierwszych (NWD)
-
-	*/
-
 }

@@ -1,7 +1,9 @@
 100,Samochody,2|4|5
 200,Cliparty,8
 100,Cliparty,7
-100,BMW,1|6|10
-400,BMW,13
-200,Nowy,3|5
-200,Inny,4
+100,BMW,1|6|8
+400,BMW,5
+200,Nowy,3|5|4
+200,Inny,
+100,Bryczki,2
+200,Bryczki,3|5
