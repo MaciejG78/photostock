@@ -29,14 +29,12 @@ public class LightBoxScreen {
     private Scanner scanner;
     private final LoginScreen loginScreen;
     private final LightBoxManagement lightBoxManagement;
-    private TransactionRepository transactionRepository;
     private boolean exit;
 
-    public LightBoxScreen(Scanner scanner, LoginScreen loginScreen, LightBoxManagement lightBoxManagement, TransactionRepository transactionRepository) {
+    public LightBoxScreen(Scanner scanner, LoginScreen loginScreen, LightBoxManagement lightBoxManagement) {
         this.scanner = scanner;
         this.loginScreen = loginScreen;
         this.lightBoxManagement = lightBoxManagement;
-        this.transactionRepository = transactionRepository;
     }
 
     public void print() {
@@ -58,10 +56,7 @@ public class LightBoxScreen {
                 showLightBoxes();
                 return;
             }
-            if (cmd[0].equals("transakcje")) {
-                showTransactions();
-                return;
-            }
+
             if (cmd[0].equals("powrot")) {
                 exit = true;
                 return;
@@ -80,21 +75,6 @@ public class LightBoxScreen {
             return;
         }
         System.out.println("Sorry nie rozumiem ;(");
-    }
-
-    private void showTransactions() {
-        String clientNumber = loginScreen.getAuthenticatedClientNumber();
-        Collection<Transaction> transactions = transactionRepository.getTransactions(clientNumber);
-        if (transactions == null) {
-            System.out.println("Nie masz aktualnie żadnych transakcji na koncie");
-        } else {
-            int i = 1;
-            for (Transaction transaction : transactions) {
-                System.out.println(i + ". Wartość transakcji:" + transaction.getValue() + ", Opis transakcji: " + transaction.getDescription());
-                i++;
-            }
-        }
-
     }
 
     private void reserveLightBox(String lightBoxName) {
@@ -148,12 +128,13 @@ public class LightBoxScreen {
     }
 
     private void printMenu() {
-        System.out.println("1. Aby wyswietlić nazwy wszystkich lighboxow wpisz słowo: pokaz\n" +
+        System.out.println("======================================== \n" +
+                "Menu: \n" +
+                "1. Aby wyswietlić nazwy wszystkich lighboxow wpisz słowo: pokaz\n" +
                 "2. Aby wyswietlić produkty znajdujace sie w lighboxie o zadanej nazwie wpisz słowo: pokaz [nazwa lightboxa]\n" +
                 "3. Aby dodać do lightboxa o zadanej nazwie produkt o zadanym numerze wpisz słowo: dodaj [nazwa lightboxa] [nr produktu]\n" +
                 "4. Aby zarezerwować produkty z LightBoxa wpisz słowo: rezerwuj [nazwa lightboxa]\n" +
-                "5. Aby pokazać transakcje klienta wpisz słowo: transakcje\n" +
-                "6. Aby powrócić do menu głównego aplikacji wpisz słowo: powrot");
+                "5. Aby powrócić do menu głównego aplikacji wpisz słowo: powrot");
     }
 
 

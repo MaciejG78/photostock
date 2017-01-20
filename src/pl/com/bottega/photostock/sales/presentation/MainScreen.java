@@ -58,6 +58,8 @@ public class MainScreen {
     }
 
     private void printMenu() {
+        System.out.println("===============================");
+        System.out.println("Menu główne:");
         System.out.println("1. Wyszukaj produkty");
         System.out.println("2. Zarezerwuj produkt");
         System.out.println("3. Wygeneruj ofertę");

@@ -6,6 +6,8 @@ import pl.com.bottega.photostock.sales.model.client.TransactionRepository;
 import pl.com.bottega.photostock.sales.model.money.Money;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -27,6 +29,7 @@ public class CSVTransactionsRepository implements TransactionRepository {
                 String[] components = {tr.getValue().toString(), tr.getDescription(), tr.getTimestamp().format(DateTimeFormatter.ISO_DATE_TIME)};
                 printWriter.println(StringUtils.join(Arrays.asList(components), ","));
             }
+            printWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,14 +43,35 @@ public class CSVTransactionsRepository implements TransactionRepository {
                 String[] attributes = line.trim().split(",");
                 String[] costOfTransactionInString = attributes[0].split(" ");
                 Money costOfTransaction = Money.valueOf(costOfTransactionInString[0]);
-                String descriptionOfTransaction = attributes[1];
+                String descriptionOfTransaction = attributes[1] + ", Data: " + dateAndTimeConverted(attributes[2]);
                 Transaction transaction = new Transaction(costOfTransaction, descriptionOfTransaction);
                 transactions.add(transaction);
             }
+            bufferedReader.close();
+        } catch (FileNotFoundException e) {
+            System.err.println("Plik nie istnieje, więc nie było żadnych transakcji");
         } catch (Exception e) {
             throw new DataAccessException(e);
         }
         return transactions;
+    }
+
+    private String dateAndTimeConverted(String attribute) {
+        SimpleDateFormat formatInput = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        String dateFormatOutput = "yyyy-MM-dd";
+        String hourFormatOutput = "HH:mm";
+        SimpleDateFormat formatdateOutput = new SimpleDateFormat(dateFormatOutput);
+        SimpleDateFormat formatHourOutput = new SimpleDateFormat(hourFormatOutput);
+        String dateOutput = null;
+        String hourOutput = null;
+        try {
+            Date dateAndTime = formatInput.parse(attribute);
+            dateOutput = formatdateOutput.format(dateAndTime);
+            hourOutput = formatHourOutput.format(dateAndTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dateOutput + ", czas transakcji: " + hourOutput;
     }
 
     private String getRepositoryPath(String clientNumber) {
@@ -55,6 +79,7 @@ public class CSVTransactionsRepository implements TransactionRepository {
     }
 
     private String getFileName(String clientNumber) {
+        String cs = "clients-" + clientNumber + "-transactions.csv";
         return "clients-" + clientNumber + "-transactions.csv";
     }
 

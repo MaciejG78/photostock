@@ -9,6 +9,6 @@ public interface TransactionRepository {
 
     void saveTransactions(String clientNumber, Collection<Transaction> transactions);
 
-    public Collection<Transaction> getTransactions(String clientNumber);
+    Collection<Transaction> getTransactions(String clientNumber);
 
 }
