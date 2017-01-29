@@ -21,6 +21,13 @@ public class Transaction {
         //timestamp.toInstant(ZoneOffset.UTC).toEpochMilli();
     }
 
+    public Transaction(Money value, String description, LocalDateTime transactionDate) {
+
+        this.value = value;
+        this.description = description;
+        this.timestamp = transactionDate;
+    }
+
     public Money getValue() {
         return value;
     }

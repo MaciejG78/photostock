@@ -8,6 +8,8 @@ import pl.com.bottega.photostock.sales.model.product.Product;
 import pl.com.bottega.photostock.sales.model.product.ProductRepository;
 import pl.com.bottega.photostock.sales.model.purchase.*;
 
+import java.sql.SQLException;
+
 /**
  * Created by macie on 08.01.2017.
  */

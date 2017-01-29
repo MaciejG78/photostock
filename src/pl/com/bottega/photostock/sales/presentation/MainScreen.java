@@ -1,5 +1,6 @@
 package pl.com.bottega.photostock.sales.presentation;
 
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**

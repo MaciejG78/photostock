@@ -40,11 +40,11 @@ public interface Money extends Comparable<Money> {
     IntegerMoney convertToInteger();
 
     static Money valueOf(long cents, Currency currency) {
-        return new IntegerMoney(cents * 100, currency);
+        return new IntegerMoney(cents, currency);
     }
 
     static Money valueOf(long cents) {
-        return new IntegerMoney(cents * 100, DEFAULT_CURRENCY);
+        return new IntegerMoney(cents, DEFAULT_CURRENCY);
     }
 
 

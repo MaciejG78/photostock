@@ -100,4 +100,8 @@ public class IntegerMoney implements Money {
         ensureSameCurrency(integerMoney);
         return integerMoney;
     }
+
+    public long toCents() {
+        return cents;
+    }
 }

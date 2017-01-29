@@ -33,6 +33,7 @@ public class CSVLightBoxRepository implements LightBoxRepository {
     public void put(LightBox lightBox) {
         Client owner = lightBox.getOwner();
         Boolean isNewLightBoxForClient = true;
+        ensureCSVExist();
         try (
                 BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
                 PrintWriter printWriter = new PrintWriter(new FileWriter(tmpPath))
@@ -56,6 +57,14 @@ public class CSVLightBoxRepository implements LightBoxRepository {
             throw new DataAccessException(e);
         }
         replaceFiles();
+    }
+
+    private void ensureCSVExist() {
+        try {
+            new File(path).createNewFile();
+        } catch (IOException e) {
+            throw new DataAccessException(e);
+        }
     }
 
     private void writeLightBox(LightBox lightBox, PrintWriter printWriter) {
