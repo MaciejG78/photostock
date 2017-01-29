@@ -5,6 +5,7 @@ import pl.com.bottega.photostock.sales.model.client.*;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
 import pl.com.bottega.photostock.sales.model.money.Money;
+import pl.com.bottega.photostock.sales.model.product.Clip;
 import pl.com.bottega.photostock.sales.model.product.Picture;
 import pl.com.bottega.photostock.sales.model.product.Product;
 
@@ -93,15 +94,26 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                Product product = new Picture(resultSet.getString("ProductNumber"),
-                        resultSet.getString("ProductName"),
-                        tags, Money.valueOf(resultSet.getInt("ProductPrice")), resultSet.getBoolean("Available"));
+                Product product = null;
+                if (resultSet.getString("ProductType").equals("Picture")) {
+                    product = new Picture(resultSet.getString("ProductNumber"),
+                            resultSet.getString("ProductName"),
+                            tags, Money.valueOf(resultSet.getInt("ProductPrice")),
+                            resultSet.getBoolean("Available"));
+                } else {
+                    if (resultSet.getString("ProductType").equals("Clip")) {
+                        product = new Clip(resultSet.getString("ProductNumber"),
+                                resultSet.getString("ProductName"),
+                                resultSet.getLong("Length"),
+                                Money.valueOf(resultSet.getInt("ProductPrice")),
+                                resultSet.getBoolean("Available"));
+                    }
+                }
                 items.add(product);
             }
         } catch (SQLException e) {
             new DataAccessException(e);
         }
-
         return items;
     }
 

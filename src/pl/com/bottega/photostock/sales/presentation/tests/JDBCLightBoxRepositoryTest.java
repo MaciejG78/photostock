@@ -26,7 +26,7 @@ public class JDBCLightBoxRepositoryTest {
 
         ClientRepository clientRepository = new JDBCClientRepository(c);
 
-        Client client = clientRepository.get("300");
+        Client client = clientRepository.get("200");
         System.out.println(client.getNumber() + ", " + client.getName());
 
         Collection<String> lightBox = lightBoxRepository.getLightBoxNames(client);
