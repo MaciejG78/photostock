@@ -26,7 +26,7 @@ public class JDBCLightBoxRepositoryTest {
 
         ClientRepository clientRepository = new JDBCClientRepository(c);
 
-        Client client = clientRepository.get("200");
+        Client client = clientRepository.get("100");
         System.out.println(client.getNumber() + ", " + client.getName());
 
         Collection<String> lightBox = lightBoxRepository.getLightBoxNames(client);
@@ -42,8 +42,20 @@ public class JDBCLightBoxRepositoryTest {
             for (Product oneProduct : product)
                 System.out.println(oneProduct.getName());
         }
-        ;
 
+        System.out.println("---------------------------------------");
+        System.out.println("Zawartość lightboxa o nazwie: auta");
+        LightBox clientLightBox = lightBoxRepository.findLightBox(client, "auta");
+        for (Product lb : clientLightBox) {
+            System.out.println(lb.getName());
+
+        }
+
+
+        System.out.println("---------------------------------------");
+        System.out.println("Dodajemy do Lightboxa nowy produkt");
+
+        lightBoxRepository.put(lightBoxRepository.findLightBox(client, "buty"));
 
     }
 }

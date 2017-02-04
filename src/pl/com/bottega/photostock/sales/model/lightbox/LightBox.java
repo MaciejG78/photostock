@@ -73,4 +73,5 @@ public class LightBox implements Iterable<Product> {
         }
         return output;
     }
+
 }

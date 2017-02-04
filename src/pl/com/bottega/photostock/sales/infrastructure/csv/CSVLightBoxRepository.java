@@ -2,6 +2,7 @@ package pl.com.bottega.photostock.sales.infrastructure.csv;
 
 import com.sun.deploy.util.ArrayUtil;
 import com.sun.deploy.util.StringUtils;
+import pl.com.bottega.photostock.sales.application.LightBoxManagement;
 import pl.com.bottega.photostock.sales.model.client.Client;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBoxRepository;
