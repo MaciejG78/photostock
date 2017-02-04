@@ -53,9 +53,9 @@ public class JDBCLightBoxRepositoryTest {
 
 
         System.out.println("---------------------------------------");
-        System.out.println("Dodajemy do Lightboxa nowy produkt");
+        System.out.println("Dodajemy nowego lightboxa (jak nie ma)");
 
-        lightBoxRepository.put(lightBoxRepository.findLightBox(client, "buty"));
+        lightBoxRepository.put(lightBoxRepository.findLightBox(client, "samoloty"));
 
     }
 }
