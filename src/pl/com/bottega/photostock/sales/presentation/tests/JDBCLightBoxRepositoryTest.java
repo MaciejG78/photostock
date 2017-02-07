@@ -56,8 +56,14 @@ public class JDBCLightBoxRepositoryTest {
 
         lightBoxRepository.put(lightBoxRepository.findLightBox(client, "wodoloty"));
         System.out.println("---------------------------------------");
-        clientLightBox.add(new Picture("14", "Skoda Superb", new ArrayList<String>(), Money.valueOf(14)));
-        clientLightBox.add(new Picture("15", "Szybowiec", new ArrayList<String>(), Money.valueOf(100)));
+
+        try {
+            clientLightBox.add(new Picture("5", "Skoda Superb", new ArrayList<String>(), Money.valueOf(14)));
+            clientLightBox.add(new Picture("15", "Szybowiec", new ArrayList<String>(), Money.valueOf(100)));
+        } catch (IllegalArgumentException e) {
+            System.out.println("ATTENTION..." + e.getMessage());
+        }
+
         for (Product lb : clientLightBox) {
             System.out.println(lb.getName() + ", " + lb.getNumber());
         }

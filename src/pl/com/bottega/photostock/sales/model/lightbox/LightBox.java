@@ -33,7 +33,6 @@ public class LightBox implements Iterable<Product> {
             throw new IllegalArgumentException(String.format("LightBox already contain this picture %s", product.getNumber()));
         product.ensureAvailable();
         items.add(product);
-
     }
 
     public void remove(Product product) {

@@ -191,6 +191,7 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
     }
 
     private Integer getProductIDFromLightbox(Integer lightboxID, Integer productID) throws SQLException {
