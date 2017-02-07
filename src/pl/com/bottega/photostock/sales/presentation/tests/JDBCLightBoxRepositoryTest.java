@@ -48,28 +48,23 @@ public class JDBCLightBoxRepositoryTest {
         }
 
         System.out.println("---------------------------------------");
-        System.out.println("Zawartość lightboxa o nazwie: auta");
-        LightBox clientLightBox = lightBoxRepository.findLightBox(client, "auta");
+        LightBox clientLightBox = lightBoxRepository.findLightBox(client, "stupid");
+        System.out.println(String.format("Zawartość lightboxa o nazwie: %s", clientLightBox.getName()));
         for (Product lb : clientLightBox) {
             System.out.println(lb.getName());
         }
 
-        lightBoxRepository.put(lightBoxRepository.findLightBox(client, "wodoloty"));
-        System.out.println("---------------------------------------");
+        lightBoxRepository.put(lightBoxRepository.findLightBox(client, "wygłupy"));
 
+        System.out.println("---------------------------------------");
+        System.out.println("Dodanie dwóch produktów i wrzucenie do lightboxa");
         try {
-            clientLightBox.add(new Picture("5", "Skoda Superb", new ArrayList<String>(), Money.valueOf(14)));
-            clientLightBox.add(new Picture("15", "Szybowiec", new ArrayList<String>(), Money.valueOf(100)));
+            clientLightBox.add(new Picture("8", "Skoda Superb", new ArrayList<String>(), Money.valueOf(14)));
+            clientLightBox.add(new Picture("1", "Szybowiec", new ArrayList<String>(), Money.valueOf(100)));
         } catch (IllegalArgumentException e) {
             System.out.println("ATTENTION..." + e.getMessage());
         }
-
-        for (Product lb : clientLightBox) {
-            System.out.println(lb.getName() + ", " + lb.getNumber());
-        }
-        System.out.println("---------------------------------------");
-        System.out.println("Dodajemy nowego lightboxa (jak nie ma)");
-
         lightBoxRepository.put(clientLightBox);
+        System.out.println("---------------------------------------");
     }
 }

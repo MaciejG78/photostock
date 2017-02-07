@@ -47,8 +47,6 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
             "VALUES (?,?)";
 
 
-
-
     private Connection connection;
 
 
