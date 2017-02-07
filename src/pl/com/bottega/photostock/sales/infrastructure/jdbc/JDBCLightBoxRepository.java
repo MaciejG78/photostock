@@ -1,6 +1,5 @@
 package pl.com.bottega.photostock.sales.infrastructure.jdbc;
 
-import pl.com.bottega.photostock.sales.application.LightBoxManagement;
 import pl.com.bottega.photostock.sales.infrastructure.csv.DataAccessException;
 import pl.com.bottega.photostock.sales.model.client.Client;
 import pl.com.bottega.photostock.sales.model.lightbox.LightBox;
@@ -104,18 +103,15 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
             Boolean firstLoop = true;
             while (resultSet.next()) {
                 lightBoxName = resultSet.getString("LightboxName");
-                Product product = null;
+
                 if (!previousLightBoxName.equals(lightBoxName)) {
                     if (!firstLoop)
                         lightBoxes.add(new LightBox(client, previousLightBoxName, items));
-                    tags = new ArrayList<>();
                     items = new LinkedList<>();
-                    product = checkTypeOfProduct(resultSet, tags, product);
-                    items.add(product);
+                    items.add(makeNewProduct(resultSet));
                     previousLightBoxName = lightBoxName;
                 } else {
-                    product = checkTypeOfProduct(resultSet, tags, product);
-                    items.add(product);
+                    items.add(makeNewProduct(resultSet));
                 }
                 firstLoop = false;
 
@@ -127,11 +123,12 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
         return lightBoxes;
     }
 
-    private Product checkTypeOfProduct(ResultSet resultSet, Collection<String> tags, Product product) throws SQLException {
+    private Product makeNewProduct(ResultSet resultSet) throws SQLException {
+        Product product = null;
         if (resultSet.getString("ProductType").equals("Picture")) {
             product = new Picture(resultSet.getString("ProductNumber"),
                     resultSet.getString("ProductName"),
-                    tags, Money.valueOf(resultSet.getInt("ProductPrice")),
+                    new ArrayList<>(), Money.valueOf(resultSet.getInt("ProductPrice")),
                     resultSet.getBoolean("Available"));
         } else {
             if (resultSet.getString("ProductType").equals("Clip")) {
@@ -159,11 +156,10 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
             ResultSet resultSet = getLightbox(clientId, lightBoxName);
             if (resultSet != null) {
                 LightBox lightBox = new LightBox(client, lightBoxName);
-                Collection<String> tags = new ArrayList<>();
-                Product product = null;
+                //Collection<String> tags = new ArrayList<>();
+                //Product product = null;
                 while (resultSet.next()) {
-                    product = checkTypeOfProduct(resultSet, tags, product);
-                    lightBox.add(product);
+                    lightBox.add(makeNewProduct(resultSet));
                 }
                 if (lightBox.getProducts() != null)
                     return lightBox;
@@ -185,10 +181,10 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
                 lightboxID = getLightBoxNumber(clientId, lightBox.getName());
             }
 
-            Integer productID = null;
             List<Product> items = lightBox.getProducts();
             for (Product product : items) {
-                if (getProductIDFromLightbox(lightboxID, Integer.valueOf(product.getNumber())) == null) {
+                Integer productID = Integer.valueOf(product.getNumber());
+                if (getProductIDFromLightbox(lightboxID, productID) == null) {
                     putNewProductToLightbox(lightboxID, productID);
                 }
             }
@@ -220,15 +216,15 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
 
     private void putNewProductToLightbox(Integer lightboxID, Integer productID) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_PRODUCT_TO_CLIENT_LIGHTBOX_SQL);
-        preparedStatement.setString(1, String.valueOf(lightboxID));
-        preparedStatement.setString(2, String.valueOf(productID));
+        preparedStatement.setInt(1, lightboxID);
+        preparedStatement.setInt(2, productID);
         preparedStatement.executeUpdate();
     }
 
 
     private void putNewLightbox(Integer clientId, String lightBoxName) throws SQLException {
         PreparedStatement preparedStatement = connection.prepareStatement(INSERT_NEW_CLIENT_LIGHTBOX_SQL);
-        preparedStatement.setString(1, String.valueOf(clientId));
+        preparedStatement.setInt(1, clientId);
         preparedStatement.setString(2, String.valueOf(lightBoxName));
         preparedStatement.executeUpdate();
     }
