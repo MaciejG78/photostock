@@ -96,12 +96,10 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
             ResultSet resultSet = getClientLightboxes(client);
             String previousLightBoxName = "";
             String lightBoxName = null;
-            Collection<String> tags = null;
             List<Product> items = null;
             Boolean firstLoop = true;
             while (resultSet.next()) {
                 lightBoxName = resultSet.getString("LightboxName");
-
                 if (!previousLightBoxName.equals(lightBoxName)) {
                     if (!firstLoop)
                         lightBoxes.add(new LightBox(client, previousLightBoxName, items));
@@ -112,7 +110,6 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
                     items.add(makeNewProduct(resultSet));
                 }
                 firstLoop = false;
-
             }
             lightBoxes.add(new LightBox(client, lightBoxName, items));
         } catch (SQLException e) {
@@ -149,23 +146,21 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
 
     @Override
     public LightBox findLightBox(Client client, String lightBoxName) {
+        List<Product> items = new LinkedList<>();
+        LightBox lightBox = new LightBox(client, lightBoxName);
         try {
             clientId = getClientId(client);
             ResultSet resultSet = getLightbox(clientId, lightBoxName);
             if (resultSet != null) {
-                LightBox lightBox = new LightBox(client, lightBoxName);
-                //Collection<String> tags = new ArrayList<>();
-                //Product product = null;
                 while (resultSet.next()) {
-                    lightBox.add(makeNewProduct(resultSet));
+                    items.add(makeNewProduct(resultSet));
                 }
-                if (lightBox.getProducts() != null)
-                    return lightBox;
+                lightBox = new LightBox(client, lightBoxName, items);
             }
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }
-        return null;
+        return lightBox;
     }
 
     @Override
@@ -189,7 +184,6 @@ public class JDBCLightBoxRepository implements LightBoxRepository {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     private Integer getProductIDFromLightbox(Integer lightboxID, Integer productID) throws SQLException {

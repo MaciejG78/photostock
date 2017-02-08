@@ -48,13 +48,13 @@ public class JDBCLightBoxRepositoryTest {
         }
 
         System.out.println("---------------------------------------");
-        LightBox clientLightBox = lightBoxRepository.findLightBox(client, "stupid");
+        LightBox clientLightBox = lightBoxRepository.findLightBox(client, "dziwadła");
         System.out.println(String.format("Zawartość lightboxa o nazwie: %s", clientLightBox.getName()));
         for (Product lb : clientLightBox) {
             System.out.println(lb.getName());
         }
 
-        lightBoxRepository.put(lightBoxRepository.findLightBox(client, "wygłupy"));
+        lightBoxRepository.put(lightBoxRepository.findLightBox(client, "toiowo"));
 
         System.out.println("---------------------------------------");
         System.out.println("Dodanie dwóch produktów i wrzucenie do lightboxa");
